@@ -4,7 +4,6 @@ const router = express.Router();
 
 router.post('/register', async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body)
   try {
     const user = await userService.registerUser(email, password);
     res.status(201).json(user);
@@ -14,7 +13,6 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/change-password', async (req, res) => {
-    console.log(req.body)
   const { email, newPassword } = req.body;
   try {
     await userService.changePassword(email, newPassword);
