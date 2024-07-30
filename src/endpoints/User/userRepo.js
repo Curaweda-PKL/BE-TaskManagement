@@ -1,7 +1,21 @@
-const prisma = require('../../prismaClient');
+const prisma = require("../../../prismaClient");
 
 async function createUser(data) {
-  return await prisma.user.create({ data });
+  if (!data) return { message: "Data not found" };
+
+  const user = await getUserByEmail(data.email);
+
+  if (user) return { message: "Email already registered" };
+
+  try {
+    const userRegistration = await prisma.user.create({ data });
+
+    if (userRegistration) {
+      return { message: "Registration successfully" };
+    }
+  } catch (err) {
+    return { message: "Failed registration call developer" };
+  }
 }
 
 async function getUserByEmail(email) {
